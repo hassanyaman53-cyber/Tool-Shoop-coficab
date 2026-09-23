@@ -1,1 +1,217 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COFICAB - Printable QR Sign</title>
+    <!-- High Resolution QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .poster-card {
+            width: 100%;
+            max-width: 680px;
+            background: #ffffff;
+            border: 6px solid #0284c7;
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header-logo {
+            font-size: 36px;
+            font-weight: 900;
+            color: #0284c7;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .header-sub {
+            font-size: 16px;
+            font-weight: 700;
+            color: #64748b;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, #0284c7, #38bdf8);
+            margin: 25px auto;
+            width: 85%;
+            border-radius: 2px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .sub-title {
+            font-size: 18px;
+            color: #334155;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .qr-frame {
+            background: #ffffff;
+            padding: 22px;
+            border: 4px dashed #0284c7;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        #qrcode img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .cta-box {
+            background-color: #0284c7;
+            color: #ffffff;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .feature-item {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .feature-item span {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* Print Override */
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+            .poster-card {
+                border: 6px solid #000000;
+                box-shadow: none;
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .cta-box {
+                background-color: #000000;
+            }
+            .divider {
+                background: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster-card">
+        <div class="header-logo">COFICAB</div>
+        <div class="header-sub">Tool Shop & Die Shop Management</div>
+
+        <div class="divider"></div>
+
+        <div class="main-title">نظام البحث الرقمي ومتابعة العِدَد والدايات</div>
+        <div class="sub-title">إدارة وتتبع مكونات خطوط السحب والكبس ورش الصيانة</div>
+
+        <div class="qr-frame">
+            <div id="qrcode"></div>
+        </div>
+
+        <div>
+            <div class="cta-box">📱 امسح الرمز بالموبايل للوصول الفوري</div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                🗄️ Cabinet E
+                <span>أدوات الصيانة والعِدَد</span>
+            </div>
+            <div class="feature-item">
+                📦 Locker A - F
+                <span>دايات السحب والتجميع</span>
+            </div>
+            <div class="feature-item">
+                ⚡ ROD Lines
+                <span>خطوط الكبس والسحب</span>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            COFICAB Egypt Industrial Performance Team © 2026
+        </div>
+    </div>
+
+    <script>
+        // High-resolution QR code generation for crisp printing
+        const siteUrl = "https://hassanyaman53-cyber.github.io/Tool-Shoop-coficab/";
+        new QRCode(document.getElementById("qrcode"), {
+            text: siteUrl,
+            width: 220,
+            height: 220,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>
