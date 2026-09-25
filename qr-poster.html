@@ -3,255 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COFICAB - نظام البحث الرقمي والبحث الصوتي</title>
+  <title>بوستر ورشة كوفيكاب - COFICAB Tool Shop QR</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
     body {
-      background-color: #f4f7f6;
-      color: #333;
-      padding: 20px;
+      background-color: #eef2f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
       min-height: 100vh;
-    }
-    .container {
-      width: 100%;
-      max-width: 650px;
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border-top: 6px solid #0088cc;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .header h1 {
-      color: #0088cc;
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
-    .header p {
-      color: #666;
-      font-size: 14px;
-    }
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .search-input {
-      flex: 1;
-      padding: 14px 18px;
-      font-size: 16px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-    .search-input:focus {
-      border-color: #0088cc;
-    }
-    .voice-btn {
-      background-color: #0088cc;
-      color: white;
-      border: none;
-      padding: 0 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background-color 0.3s, transform 0.1s;
-    }
-    .voice-btn:hover {
-      background-color: #006699;
-    }
-    .voice-btn.listening {
-      background-color: #e74c3c;
-      animation: pulse 1.2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .status-text {
-      text-align: center;
-      font-size: 13px;
-      color: #e74c3c;
-      min-height: 20px;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-    .results-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .item-card {
-      background: #f9fbfd;
-      border: 1px solid #e1e8ed;
-      padding: 15px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .item-info h3 {
-      font-size: 16px;
-      color: #111;
-      margin-bottom: 4px;
-    }
-    .item-info p {
-      font-size: 13px;
-      color: #666;
-    }
-    .badge {
-      background: #e1f5fe;
-      color: #0288d1;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    .no-result {
-      text-align: center;
-      color: #888;
+      margin: 0;
       padding: 20px;
+    }
+    .poster {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      text-align: center;
+      max-width: 450px;
+      width: 100%;
+      border-top: 8px solid #0088cc;
+    }
+    h1 {
+      color: #0088cc;
+      font-size: 26px;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+    p {
+      color: #555;
+      font-size: 15px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    .qr-box {
+      background: #f9fbfd;
+      padding: 20px;
+      border: 2px dashed #0088cc;
+      border-radius: 15px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .qr-box img {
+      width: 240px;
+      height: 240px;
+      display: block;
+      margin: 0 auto;
+    }
+    .footer-note {
+      font-size: 13px;
+      color: #777;
+      background: #f4f7f6;
+      padding: 10px;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="header">
-      <h1>COFICAB Tool Shop</h1>
-      <p>نظام البحث الرقمي والبحث الصوتي للعُدد والدايات</p>
+  <div class="poster">
+    <h1>COFICAB Tool Shop</h1>
+    <p>قم بمسح الكود التالي بكاميرا الموبايل لفتح <b>نظام البحث الرقمي والصوتي</b> للدايات والعُدد فوراً:</p>
+    
+    <div class="qr-box">
+      <!-- كود الـ QR مربوط مباشرة بصفحة البحث الخاصة بك -->
+      <img src="https://quickchart.io/qr?text=https://hassanyaman53-cyber.github.io/Tool-Shoop-coficab/index.html&size=300" alt="COFICAB Tool Shop QR Code">
     </div>
 
-    <div class="search-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="ابحث برقم الداي، اسم المكون، أو الخط..." onkeyup="filterItems()">
-      <button id="voiceBtn" class="voice-btn" onclick="toggleVoiceSearch()">
-        <span>🎤</span>
-        <span id="voiceText">صوتي</span>
-      </button>
+    <div class="footer-note">
+      🔧 إدارة Tool Shop - كوفيكاب
     </div>
-
-    <div id="statusText" class="status-text"></div>
-
-    <ul id="resultsList" class="results-list">
-      <li class="item-card" data-search="داي سحب مقاس 1.20 خط سحب 1 رف A1">
-        <div class="item-info">
-          <h3>داي سحب (Die 1.20mm)</h3>
-          <p>الخط: خط السحب المباشر 01 | الموقع: رف A1</p>
-        </div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="قالب كبس هيدروليك خط كبس 2 رف B3">
-        <div class="item-info">
-          <h3>قالب كبس هيدروليك</h3>
-          <p>الخط: خط الكبس 02 | الموقع: رف B3</p>
-        </div>
-        <span class="badge">صيانة دورية</span>
-      </li>
-      <li class="item-card" data-search="فلتر سيراميك HPC-15 مخزن قطع الغيار رف C2">
-        <div class="item-info">
-          <h3>فلتر سيراميك HPC-15</h3>
-          <p>القطاع: صيانة خطوط السحب | الموقع: رف C2</p>
-        </div>
-        <span class="badge">متوفر</span>
-      </li>
-      <li class="item-card" data-search="داي تشكيل كابلات خط سحب 3 رف A4">
-        <div class="item-info">
-          <h3>داي تشكيل كابلات</h3>
-          <p>الخط: خط السحب الرئيسي 03 | الموقع: رف A4</p>
-        </div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-    </ul>
   </div>
-
-  <script>
-    function filterItems() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const items = document.querySelectorAll('.item-card');
-      let hasResults = false;
-
-      items.forEach(item => {
-        const searchText = item.getAttribute('data-search').toLowerCase();
-        if (searchText.includes(query)) {
-          item.style.display = 'flex';
-          hasResults = true;
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    }
-
-    // Voice Search Implementation
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let recognition = null;
-
-    if (SpeechRecognition) {
-      recognition = new SpeechRecognition();
-      recognition.lang = 'ar-EG';
-      recognition.continuous = false;
-      recognition.interimResults = false;
-
-      recognition.onstart = function() {
-        document.getElementById('voiceBtn').classList.add('listening');
-        document.getElementById('voiceText').innerText = 'جاري الاستماع...';
-        document.getElementById('statusText').innerText = 'تحدث الآن برقم الداي أو اسم المكون...';
-      };
-
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('searchInput').value = transcript;
-        filterItems();
-        stopVoice();
-      };
-
-      recognition.onerror = function(event) {
-        document.getElementById('statusText').innerText = 'لم يتم التعرف على الصوت، حاول مرة أخرى.';
-        stopVoice();
-      };
-
-      recognition.onend = function() {
-        stopVoice();
-      };
-    } else {
-      document.getElementById('voiceBtn').style.display = 'none';
-    }
-
-    function toggleVoiceSearch() {
-      if (!recognition) return;
-      if (document.getElementById('voiceBtn').classList.contains('listening')) {
-        recognition.stop();
-      } else {
-        recognition.start();
-      }
-    }
-
-    function stopVoice() {
-      document.getElementById('voiceBtn').classList.remove('listening');
-      document.getElementById('voiceText').innerText = 'صوتي';
-      setTimeout(() => {
-        document.getElementById('statusText').innerText = '';
-      }, 3000);
-    }
-  </script>
 
 </body>
 </html>
