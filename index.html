@@ -126,11 +126,6 @@
       font-size: 12px;
       font-weight: bold;
     }
-    .no-result {
-      text-align: center;
-      color: #888;
-      padding: 20px;
-    }
   </style>
 </head>
 <body>
@@ -187,20 +182,17 @@
     function filterItems() {
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
       const items = document.querySelectorAll('.item-card');
-      let hasResults = false;
 
       items.forEach(item => {
         const searchText = item.getAttribute('data-search').toLowerCase();
         if (searchText.includes(query)) {
           item.style.display = 'flex';
-          hasResults = true;
         } else {
           item.style.display = 'none';
         }
       });
     }
 
-    // Voice Search Implementation
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition = null;
 
