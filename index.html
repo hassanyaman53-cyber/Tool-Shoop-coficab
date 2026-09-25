@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COFICAB - نظام البحث الرقمي والبحث الصوتي</title>
+  <title>COFICAB - Tool Shop Search System</title>
   <style>
     * {
       box-sizing: border-box;
@@ -14,7 +14,7 @@
     body {
       background-color: #f4f7f6;
       color: #333;
-      padding: 20px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,7 +24,7 @@
       width: 100%;
       max-width: 650px;
       background: #ffffff;
-      padding: 25px;
+      padding: 20px;
       border-radius: 16px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       border-top: 6px solid #0088cc;
@@ -35,24 +35,23 @@
     }
     .header h1 {
       color: #0088cc;
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 800;
       margin-bottom: 5px;
     }
     .header p {
       color: #666;
-      font-size: 14px;
+      font-size: 13px;
     }
     .search-box {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      position: relative;
+      gap: 8px;
+      margin-bottom: 15px;
     }
     .search-input {
       flex: 1;
-      padding: 14px 18px;
-      font-size: 16px;
+      padding: 12px 15px;
+      font-size: 15px;
       border: 2px solid #ddd;
       border-radius: 10px;
       outline: none;
@@ -65,17 +64,14 @@
       background-color: #0088cc;
       color: white;
       border: none;
-      padding: 0 20px;
+      padding: 0 16px;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 15px;
+      font-weight: bold;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: background-color 0.3s, transform 0.1s;
-    }
-    .voice-btn:hover {
-      background-color: #006699;
+      gap: 6px;
     }
     .voice-btn.listening {
       background-color: #e74c3c;
@@ -89,42 +85,55 @@
     .status-text {
       text-align: center;
       font-size: 13px;
-      color: #e74c3c;
-      min-height: 20px;
-      margin-bottom: 15px;
+      color: #0088cc;
+      min-height: 18px;
+      margin-bottom: 12px;
       font-weight: bold;
     }
     .results-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
     .item-card {
       background: #f9fbfd;
       border: 1px solid #e1e8ed;
-      padding: 15px;
+      padding: 12px 15px;
       border-radius: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .item-info h3 {
-      font-size: 16px;
+      font-size: 15px;
       color: #111;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .item-info p {
-      font-size: 13px;
+      font-size: 12px;
       color: #666;
     }
     .badge {
       background: #e1f5fe;
       color: #0288d1;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 11px;
       font-weight: bold;
+      white-space: nowrap;
+    }
+    .badge.maintenance {
+      background: #fff3e0;
+      color: #ef6c00;
+    }
+    .no-result {
+      display: none;
+      text-align: center;
+      color: #e74c3c;
+      padding: 20px;
+      font-weight: bold;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -137,7 +146,7 @@
     </div>
 
     <div class="search-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="ابحث برقم الداي، اسم المكون، أو الخط..." onkeyup="filterItems()">
+      <input type="text" id="searchInput" class="search-input" placeholder="اكتب المقاس (مثلاً 1.14)، اسم المكون، أو الخط..." onkeyup="filterItems()">
       <button id="voiceBtn" class="voice-btn" onclick="toggleVoiceSearch()">
         <span>🎤</span>
         <span id="voiceText">صوتي</span>
@@ -145,35 +154,59 @@
     </div>
 
     <div id="statusText" class="status-text"></div>
+    <div id="noResults" class="no-result">⚠️ لم يتم العثور على أي صنف يطابق البحث</div>
 
     <ul id="resultsList" class="results-list">
-      <li class="item-card" data-search="داي سحب مقاس 1.20 خط سحب 1 رف A1">
-        <div class="item-info">
-          <h3>داي سحب (Die 1.20mm)</h3>
-          <p>الخط: خط السحب المباشر 01 | الموقع: رف A1</p>
-        </div>
+      <!-- دايات السحب والبثق بمختلف المقاسات -->
+      <li class="item-card" data-search="داي سحب مقاس 0.20 die 0.20mm خط سحب 1 رف A1">
+        <div class="item-info"><h3>داي سحب (Die 0.20mm)</h3><p>الخط: خط السحب 01 | الموقع: رف A1</p></div>
         <span class="badge">جاهز للاستخدام</span>
       </li>
-      <li class="item-card" data-search="قالب كبس هيدروليك خط كبس 2 رف B3">
-        <div class="item-info">
-          <h3>قالب كبس هيدروليك</h3>
-          <p>الخط: خط الكبس 02 | الموقع: رف B3</p>
-        </div>
-        <span class="badge">صيانة دورية</span>
+      <li class="item-card" data-search="داي سحب مقاس 0.50 die 0.50mm خط سحب 1 رف A1">
+        <div class="item-info"><h3>داي سحب (Die 0.50mm)</h3><p>الخط: خط السحب 01 | الموقع: رف A1</p></div>
+        <span class="badge">جاهز للاستخدام</span>
       </li>
-      <li class="item-card" data-search="فلتر سيراميك HPC-15 مخزن قطع الغيار رف C2">
-        <div class="item-info">
-          <h3>فلتر سيراميك HPC-15</h3>
-          <p>القطاع: صيانة خطوط السحب | الموقع: رف C2</p>
-        </div>
+      <li class="item-card" data-search="داي سحب مقاس 0.80 die 0.80mm خط سحب 2 رف A2">
+        <div class="item-info"><h3>داي سحب (Die 0.80mm)</h3><p>الخط: خط السحب 02 | الموقع: رف A2</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+      <li class="item-card" data-search="داي سحب مقاس 1.00 die 1.00mm خط سحب 2 رف A2">
+        <div class="item-info"><h3>داي سحب (Die 1.00mm)</h3><p>الخط: خط السحب 02 | الموقع: رف A2</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+      <li class="item-card" data-search="داي سحب مقاس 1.14 die 1.14mm خط سحب 1 رف A3">
+        <div class="item-info"><h3>داي سحب (Die 1.14mm)</h3><p>الخط: خط السحب المباشر 01 | الموقع: رف A3</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+      <li class="item-card" data-search="داي سحب مقاس 1.20 die 1.20mm خط سحب 1 رف A3">
+        <div class="item-info"><h3>داي سحب (Die 1.20mm)</h3><p>الخط: خط السحب المباشر 01 | الموقع: رف A3</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+      <li class="item-card" data-search="داي سحب مقاس 1.30 die 1.30mm خط سحب 3 رف A4">
+        <div class="item-info"><h3>داي سحب (Die 1.30mm)</h3><p>الخط: خط السحب 03 | الموقع: رف A4</p></div>
+        <span class="badge maintenance">صيانة دورية</span>
+      </li>
+      <li class="item-card" data-search="داي سحب مقاس 1.50 die 1.50mm خط سحب 3 رف A4">
+        <div class="item-info"><h3>داي سحب (Die 1.50mm)</h3><p>الخط: خط السحب 03 | الموقع: رف A4</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+      <li class="item-card" data-search="داي سحب مقاس 2.00 die 2.00mm خط سحب 4 رف B1">
+        <div class="item-info"><h3>داي سحب (Die 2.00mm)</h3><p>الخط: خط السحب الرئيسي 04 | الموقع: رف B1</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+      <li class="item-card" data-search="داي تشكيل كابلات مقاس 2.50 die 2.50mm خط سحب 4 رف B2">
+        <div class="item-info"><h3>داي تشكيل (Die 2.50mm)</h3><p>الخط: خط البثق 04 | الموقع: رف B2</p></div>
+        <span class="badge">جاهز للاستخدام</span>
+      </li>
+
+      <!-- مستلزمات الصيانة وفلاتر السيراميك -->
+      <li class="item-card" data-search="فلتر سيراميك hpc-15 hpc15 مخزن قطع الغيار رف C1">
+        <div class="item-info"><h3>فلتر سيراميك HPC-15</h3><p>القطاع: صيانة خطوط السحب | الموقع: رف C1</p></div>
         <span class="badge">متوفر</span>
       </li>
-      <li class="item-card" data-search="داي تشكيل كابلات خط سحب 3 رف A4">
-        <div class="item-info">
-          <h3>داي تشكيل كابلات</h3>
-          <p>الخط: خط السحب الرئيسي 03 | الموقع: رف A4</p>
-        </div>
-        <span class="badge">جاهز للاستخدام</span>
+      <li class="item-card" data-search="قالب كبس هيدروليك خط كبس 2 رف C3">
+        <div class="item-info"><h3>قالب كبس هيدروليك</h3><p>الخط: خط الكبس 02 | الموقع: رف C3</p></div>
+        <span class="badge maintenance">تحت الفحص</span>
       </li>
     </ul>
   </div>
@@ -182,15 +215,20 @@
     function filterItems() {
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
       const items = document.querySelectorAll('.item-card');
+      const noResults = document.getElementById('noResults');
+      let matches = 0;
 
       items.forEach(item => {
         const searchText = item.getAttribute('data-search').toLowerCase();
         if (searchText.includes(query)) {
           item.style.display = 'flex';
+          matches++;
         } else {
           item.style.display = 'none';
         }
       });
+
+      noResults.style.display = (matches === 0) ? 'block' : 'none';
     }
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -200,12 +238,11 @@
       recognition = new SpeechRecognition();
       recognition.lang = 'ar-EG';
       recognition.continuous = false;
-      recognition.interimResults = false;
 
       recognition.onstart = function() {
         document.getElementById('voiceBtn').classList.add('listening');
-        document.getElementById('voiceText').innerText = 'جاري الاستماع...';
-        document.getElementById('statusText').innerText = 'تحدث الآن برقم الداي أو اسم المكون...';
+        document.getElementById('voiceText').innerText = 'مستمع...';
+        document.getElementById('statusText').innerText = 'تحدث الآن بالمقاس أو اسم الداي...';
       };
 
       recognition.onresult = function(event) {
@@ -215,14 +252,12 @@
         stopVoice();
       };
 
-      recognition.onerror = function(event) {
+      recognition.onerror = function() {
         document.getElementById('statusText').innerText = 'لم يتم التعرف على الصوت، حاول مرة أخرى.';
         stopVoice();
       };
 
-      recognition.onend = function() {
-        stopVoice();
-      };
+      recognition.onend = function() { stopVoice(); };
     } else {
       document.getElementById('voiceBtn').style.display = 'none';
     }
@@ -239,9 +274,7 @@
     function stopVoice() {
       document.getElementById('voiceBtn').classList.remove('listening');
       document.getElementById('voiceText').innerText = 'صوتي';
-      setTimeout(() => {
-        document.getElementById('statusText').innerText = '';
-      }, 3000);
+      setTimeout(() => { document.getElementById('statusText').innerText = ''; }, 3000);
     }
   </script>
 
