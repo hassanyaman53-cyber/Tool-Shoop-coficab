@@ -1,282 +1,1266 @@
+```html
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COFICAB - Tool Shop Search System</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    body {
-      background-color: #f4f7f6;
-      color: #333;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      width: 100%;
-      max-width: 650px;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border-top: 6px solid #0088cc;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .header h1 {
-      color: #0088cc;
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
-    .header p {
-      color: #666;
-      font-size: 13px;
-    }
-    .search-box {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-    .search-input {
-      flex: 1;
-      padding: 12px 15px;
-      font-size: 15px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-    .search-input:focus {
-      border-color: #0088cc;
-    }
-    .voice-btn {
-      background-color: #0088cc;
-      color: white;
-      border: none;
-      padding: 0 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .voice-btn.listening {
-      background-color: #e74c3c;
-      animation: pulse 1.2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .status-text {
-      text-align: center;
-      font-size: 13px;
-      color: #0088cc;
-      min-height: 18px;
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
-    .results-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .item-card {
-      background: #f9fbfd;
-      border: 1px solid #e1e8ed;
-      padding: 12px 15px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .item-info h3 {
-      font-size: 15px;
-      color: #111;
-      margin-bottom: 3px;
-    }
-    .item-info p {
-      font-size: 12px;
-      color: #666;
-    }
-    .badge {
-      background: #e1f5fe;
-      color: #0288d1;
-      padding: 5px 10px;
-      border-radius: 15px;
-      font-size: 11px;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-    .badge.maintenance {
-      background: #fff3e0;
-      color: #ef6c00;
-    }
-    .no-result {
-      display: none;
-      text-align: center;
-      color: #e74c3c;
-      padding: 20px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>COFICAB - Tool & Die Shop Finder</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f2f5f8;
+    color:#17212b;
+    min-height:100vh;
+}
+
+.header{
+    background:linear-gradient(135deg,#071d35,#0b4b78);
+    color:white;
+    padding:22px 18px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.18);
+}
+
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:15px;
+    opacity:.9;
+}
+
+.container{
+    width:min(1100px,94%);
+    margin:25px auto;
+}
+
+.search-box{
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.search-box h2{
+    margin-bottom:12px;
+    font-size:20px;
+}
+
+#searchInput{
+    width:100%;
+    padding:16px;
+    border:2px solid #d5dde5;
+    border-radius:12px;
+    font-size:18px;
+    outline:none;
+}
+
+#searchInput:focus{
+    border-color:#0b6ea8;
+}
+
+.hint{
+    margin-top:9px;
+    color:#687684;
+    font-size:13px;
+}
+
+.results{
+    margin-top:20px;
+}
+
+.result-card{
+    background:white;
+    border-radius:15px;
+    margin-bottom:14px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    border-left:6px solid #0b6ea8;
+}
+
+.result-title{
+    font-size:21px;
+    font-weight:800;
+    color:#0b4b78;
+    margin-bottom:10px;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+}
+
+.info{
+    background:#f5f8fa;
+    border-radius:9px;
+    padding:10px;
+}
+
+.label{
+    font-size:11px;
+    color:#6b7782;
+    text-transform:uppercase;
+    margin-bottom:4px;
+}
+
+.value{
+    font-size:16px;
+    font-weight:700;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#e8f4ea;
+    color:#23723a;
+    font-weight:700;
+    font-size:12px;
+}
+
+.no-result{
+    background:white;
+    padding:25px;
+    text-align:center;
+    border-radius:14px;
+    color:#687684;
+}
+
+.report{
+    margin-top:25px;
+    text-align:center;
+}
+
+.report button{
+    border:none;
+    background:#17212b;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.footer{
+    text-align:center;
+    color:#7b8791;
+    padding:25px;
+    font-size:12px;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="header">
-      <h1>COFICAB Tool Shop</h1>
-      <p>نظام البحث الرقمي والبحث الصوتي للعُدد والدايات</p>
+<header class="header">
+    <div class="logo">COFICAB</div>
+    <div class="subtitle">TOOL & DIE SHOP — DIGITAL FINDER</div>
+</header>
+
+<main class="container">
+
+<section class="search-box">
+    <h2>🔎 Search Tool / Die</h2>
+
+    <input
+        id="searchInput"
+        type="text"
+        placeholder="Search Dimension, Item, Locker, Drawer, Row..."
+        autocomplete="off"
+    >
+
+    <div class="hint">
+        Examples: 1.760 · Multi Drawing · Rod · Bunching · Locker C · C6
     </div>
+</section>
 
-    <div class="search-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="اكتب المقاس (مثلاً 1.14)، اسم المكون، أو الخط..." onkeyup="filterItems()">
-      <button id="voiceBtn" class="voice-btn" onclick="toggleVoiceSearch()">
-        <span>🎤</span>
-        <span id="voiceText">صوتي</span>
-      </button>
-    </div>
+<section id="results" class="results"></section>
 
-    <div id="statusText" class="status-text"></div>
-    <div id="noResults" class="no-result">⚠️ لم يتم العثور على أي صنف يطابق البحث</div>
+<div class="report">
+    <button onclick="reportLocation()">
+        ⚠️ Report Wrong Location
+    </button>
+</div>
 
-    <ul id="resultsList" class="results-list">
-      <!-- دايات السحب والبثق بمختلف المقاسات -->
-      <li class="item-card" data-search="داي سحب مقاس 0.20 die 0.20mm خط سحب 1 رف A1">
-        <div class="item-info"><h3>داي سحب (Die 0.20mm)</h3><p>الخط: خط السحب 01 | الموقع: رف A1</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 0.50 die 0.50mm خط سحب 1 رف A1">
-        <div class="item-info"><h3>داي سحب (Die 0.50mm)</h3><p>الخط: خط السحب 01 | الموقع: رف A1</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 0.80 die 0.80mm خط سحب 2 رف A2">
-        <div class="item-info"><h3>داي سحب (Die 0.80mm)</h3><p>الخط: خط السحب 02 | الموقع: رف A2</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 1.00 die 1.00mm خط سحب 2 رف A2">
-        <div class="item-info"><h3>داي سحب (Die 1.00mm)</h3><p>الخط: خط السحب 02 | الموقع: رف A2</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 1.14 die 1.14mm خط سحب 1 رف A3">
-        <div class="item-info"><h3>داي سحب (Die 1.14mm)</h3><p>الخط: خط السحب المباشر 01 | الموقع: رف A3</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 1.20 die 1.20mm خط سحب 1 رف A3">
-        <div class="item-info"><h3>داي سحب (Die 1.20mm)</h3><p>الخط: خط السحب المباشر 01 | الموقع: رف A3</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 1.30 die 1.30mm خط سحب 3 رف A4">
-        <div class="item-info"><h3>داي سحب (Die 1.30mm)</h3><p>الخط: خط السحب 03 | الموقع: رف A4</p></div>
-        <span class="badge maintenance">صيانة دورية</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 1.50 die 1.50mm خط سحب 3 رف A4">
-        <div class="item-info"><h3>داي سحب (Die 1.50mm)</h3><p>الخط: خط السحب 03 | الموقع: رف A4</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي سحب مقاس 2.00 die 2.00mm خط سحب 4 رف B1">
-        <div class="item-info"><h3>داي سحب (Die 2.00mm)</h3><p>الخط: خط السحب الرئيسي 04 | الموقع: رف B1</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
-      <li class="item-card" data-search="داي تشكيل كابلات مقاس 2.50 die 2.50mm خط سحب 4 رف B2">
-        <div class="item-info"><h3>داي تشكيل (Die 2.50mm)</h3><p>الخط: خط البثق 04 | الموقع: رف B2</p></div>
-        <span class="badge">جاهز للاستخدام</span>
-      </li>
+</main>
 
-      <!-- مستلزمات الصيانة وفلاتر السيراميك -->
-      <li class="item-card" data-search="فلتر سيراميك hpc-15 hpc15 مخزن قطع الغيار رف C1">
-        <div class="item-info"><h3>فلتر سيراميك HPC-15</h3><p>القطاع: صيانة خطوط السحب | الموقع: رف C1</p></div>
-        <span class="badge">متوفر</span>
-      </li>
-      <li class="item-card" data-search="قالب كبس هيدروليك خط كبس 2 رف C3">
-        <div class="item-info"><h3>قالب كبس هيدروليك</h3><p>الخط: خط الكبس 02 | الموقع: رف C3</p></div>
-        <span class="badge maintenance">تحت الفحص</span>
-      </li>
-    </ul>
-  </div>
+<footer class="footer">
+    COFICAB Tool & Die Shop<br>
+    Digital Location Finder
+</footer>
 
-  <script>
-    function filterItems() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const items = document.querySelectorAll('.item-card');
-      const noResults = document.getElementById('noResults');
-      let matches = 0;
+<script>
 
-      items.forEach(item => {
-        const searchText = item.getAttribute('data-search').toLowerCase();
-        if (searchText.includes(query)) {
-          item.style.display = 'flex';
-          matches++;
-        } else {
-          item.style.display = 'none';
-        }
-      });
+/*
+=========================================================
+COFICAB TOOL SHOP DATABASE
+=========================================================
+IMPORTANT:
+The A/B/C dataset below keeps only confirmed information
+available for this final build. No old sample dimensions
+are reintroduced.
+=========================================================
+*/
 
-      noResults.style.display = (matches === 0) ? 'block' : 'none';
+const DATA = [
+
+/* =========================
+   LOCKER C
+   MULTI DRAWING / ROD
+========================= */
+
+{
+    locker:"C",
+    drawer:"C6",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"1.400",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"C",
+    drawer:"C6",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"1.760",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"C",
+    drawer:"C6",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"1.870",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"C",
+    drawer:"C6",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"2.148",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"C",
+    drawer:"C6",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"2.468",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"C",
+    drawer:"C6",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"2.835",
+    row:"",
+    status:"Available"
+},
+
+/* =========================
+   LOCKER D
+   BUNCHING
+========================= */
+
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.63",
+    row:"A",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.70",
+    row:"B",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.78",
+    row:"C",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.80",
+    row:"D",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.82",
+    row:"E",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.95",
+    row:"F",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"0.97",
+    row:"G",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"1.00",
+    row:"H",
+    status:"Available"
+},
+{
+    locker:"D",
+    drawer:"D3",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"1.14",
+    row:"I",
+    status:"Available"
+},
+
+{
+    locker:"D",
+    drawer:"D1",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"",
+    row:"",
+    status:"Reserved"
+},
+{
+    locker:"D",
+    drawer:"D2",
+    item:"ROD Machine",
+    category:"Rod",
+    dimension:"",
+    row:"",
+    status:"Reserved"
+},
+
+/* =========================
+   LOCKER E
+   EXTRUSION
+========================= */
+
+{
+    locker:"E",
+    drawer:"E1",
+    item:"Bunching",
+    category:"Bunching",
+    dimension:"",
+    row:"",
+    status:"Reserved"
+},
+
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.05",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.15",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.18",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.25",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.30",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.32",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.34",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.35",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.40",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.50",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.55",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.60",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.65",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.70",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.77",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.78",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.80",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.85",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.86",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.90",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.95",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"1.98",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.00",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.15",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.20",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.25",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.28",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.30",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.35",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.50",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.55",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.60",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.65",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.70",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.75",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.80",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"2.90",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.10",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.15",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.20",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.30",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.46",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.50",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.52",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.70",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.75",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.80",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.85",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E2",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"3.90",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"E",
+    drawer:"E3",
+    item:"COMPATION DIE",
+    category:"Extrusion",
+    dimension:"4.50",
+    row:"",
+    status:"Available"
+},
+
+/* =========================
+   LOCKER F
+========================= */
+
+{
+    locker:"F",
+    drawer:"F4",
+    item:"SEMI COMPATION WG",
+    category:"Extrusion",
+    dimension:"3.58R",
+    row:"",
+    status:"Available"
+},
+
+/* =========================
+   CABINET A
+========================= */
+
+{
+    locker:"A",
+    drawer:"A1",
+    item:"Ceramic",
+    category:"Filter / Ceramic",
+    dimension:"3.1",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A1",
+    item:"Ceramic",
+    category:"Filter / Ceramic",
+    dimension:"3.5",
+    row:"",
+    status:"Available"
+},
+
+{
+    locker:"A",
+    drawer:"A2",
+    item:"C",
+    category:"Filter",
+    dimension:"2.9",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A2",
+    item:"C",
+    category:"Filter",
+    dimension:"2.55",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A2",
+    item:"C",
+    category:"Filter",
+    dimension:"2.5",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A2",
+    item:"C",
+    category:"Filter",
+    dimension:"2.3",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A2",
+    item:"C",
+    category:"Filter",
+    dimension:"2.0",
+    row:"",
+    status:"Available"
+},
+
+{
+    locker:"A",
+    drawer:"A3",
+    item:"C",
+    category:"Filter",
+    dimension:"1.55",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A3",
+    item:"C",
+    category:"Filter",
+    dimension:"1.8",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A3",
+    item:"C",
+    category:"Filter",
+    dimension:"1.3",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A3",
+    item:"C",
+    category:"Filter",
+    dimension:"1.15",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A3",
+    item:"C",
+    category:"Filter",
+    dimension:"0.95",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A3",
+    item:"C",
+    category:"Filter",
+    dimension:"0.8",
+    row:"",
+    status:"Available"
+},
+
+{
+    locker:"A",
+    drawer:"A4",
+    item:"Mesh Filter D25",
+    category:"Mesh Filter",
+    dimension:"0.2",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A4",
+    item:"Mesh Filter D25",
+    category:"Mesh Filter",
+    dimension:"0.4",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A4",
+    item:"Mesh Filter D53",
+    category:"Mesh Filter",
+    dimension:"0.14",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A4",
+    item:"Mesh Filter D36",
+    category:"Mesh Filter",
+    dimension:"0.2",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A4",
+    item:"Mesh Filter D36",
+    category:"Mesh Filter",
+    dimension:"0.14",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A4",
+    item:"Mesh Filter D35",
+    category:"Mesh Filter",
+    dimension:"0.4",
+    row:"",
+    status:"Available"
+},
+
+{
+    locker:"A",
+    drawer:"A5",
+    item:"Mesh Filter D37",
+    category:"Mesh Filter",
+    dimension:"0.2",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A5",
+    item:"Mesh Filter D37",
+    category:"Mesh Filter",
+    dimension:"0.4",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A5",
+    item:"Mesh Filter D37",
+    category:"Mesh Filter",
+    dimension:"0.14",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A5",
+    item:"Mesh Filter D53",
+    category:"Mesh Filter",
+    dimension:"0.14",
+    row:"",
+    status:"Available"
+},
+{
+    locker:"A",
+    drawer:"A5",
+    item:"Mesh Filter D53",
+    category:"Mesh Filter",
+    dimension:"0.4",
+    row:"",
+    status:"Available"
+},
+
+{
+    locker:"A",
+    drawer:"A6",
+    item:"Mesh Filter D53",
+    category:"Mesh Filter",
+    dimension:"0.2",
+    row:"",
+    status:"Available"
+},
+
+{
+    locker:"A",
+    drawer:"A7",
+    item:"Normal Filter",
+    category:"Filter",
+    dimension:"",
+    row:"",
+    status:"Available"
+}
+
+];
+
+
+/* =========================
+   SEARCH
+========================= */
+
+const input = document.getElementById("searchInput");
+const results = document.getElementById("results");
+
+function normalize(value){
+    return String(value || "")
+        .toLowerCase()
+        .replace(/[ًٌٍَُِّْـ]/g,"")
+        .replace(/٫/g,".")
+        .trim();
+}
+
+function searchData(){
+    const query = normalize(input.value);
+
+    if(!query){
+        results.innerHTML = `
+            <div class="no-result">
+                Start typing to search for a tool, dimension or location.
+            </div>
+        `;
+        return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let recognition = null;
+    const words = query.split(/\s+/).filter(Boolean);
 
-    if (SpeechRecognition) {
-      recognition = new SpeechRecognition();
-      recognition.lang = 'ar-EG';
-      recognition.continuous = false;
+    const found = DATA.filter(item => {
 
-      recognition.onstart = function() {
-        document.getElementById('voiceBtn').classList.add('listening');
-        document.getElementById('voiceText').innerText = 'مستمع...';
-        document.getElementById('statusText').innerText = 'تحدث الآن بالمقاس أو اسم الداي...';
-      };
+        const searchable = normalize([
+            item.locker,
+            item.drawer,
+            item.item,
+            item.category,
+            item.dimension,
+            item.row,
+            item.status,
+            "multi drawing",
+            "rod",
+            "bunching",
+            "extrusion"
+        ].join(" "));
 
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('searchInput').value = transcript;
-        filterItems();
-        stopVoice();
-      };
+        return words.every(word => searchable.includes(word));
+    });
 
-      recognition.onerror = function() {
-        document.getElementById('statusText').innerText = 'لم يتم التعرف على الصوت، حاول مرة أخرى.';
-        stopVoice();
-      };
-
-      recognition.onend = function() { stopVoice(); };
-    } else {
-      document.getElementById('voiceBtn').style.display = 'none';
+    if(!found.length){
+        results.innerHTML = `
+            <div class="no-result">
+                No matching tool was found.<br><br>
+                Please check the dimension, item name or locker.
+            </div>
+        `;
+        return;
     }
 
-    function toggleVoiceSearch() {
-      if (!recognition) return;
-      if (document.getElementById('voiceBtn').classList.contains('listening')) {
-        recognition.stop();
-      } else {
-        recognition.start();
-      }
-    }
+    results.innerHTML = found.map(item => `
 
-    function stopVoice() {
-      document.getElementById('voiceBtn').classList.remove('listening');
-      document.getElementById('voiceText').innerText = 'صوتي';
-      setTimeout(() => { document.getElementById('statusText').innerText = ''; }, 3000);
-    }
-  </script>
+        <div class="result-card">
+
+            <div class="result-title">
+                📍 Locker ${escapeHTML(item.locker)}
+            </div>
+
+            <div class="row">
+
+                <div class="info">
+                    <div class="label">Location</div>
+                    <div class="value">
+                        Locker ${escapeHTML(item.locker)}
+                        ${item.drawer ? " → Drawer " + escapeHTML(item.drawer) : ""}
+                        ${item.row ? " → Row " + escapeHTML(item.row) : ""}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">Item</div>
+                    <div class="value">
+                        ${escapeHTML(item.item)}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">Dimension</div>
+                    <div class="value">
+                        ${escapeHTML(item.dimension || "—")}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">Category</div>
+                    <div class="value">
+                        ${escapeHTML(item.category)}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">Status</div>
+                    <div>
+                        <span class="status">
+                            ${escapeHTML(item.status)}
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    `).join("");
+}
+
+function escapeHTML(value){
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+input.addEventListener("input", searchData);
+
+function reportLocation(){
+
+    const currentSearch = input.value.trim();
+
+    const message =
+        "Wrong Location Report\n\n" +
+        "Search: " + (currentSearch || "Not specified") +
+        "\n\nPlease verify the physical location of this item.";
+
+    const subject = encodeURIComponent(
+        "COFICAB Tool Shop - Wrong Location Report"
+    );
+
+    const body = encodeURIComponent(message);
+
+    window.location.href =
+        "mailto:?subject=" + subject + "&body=" + body;
+}
+
+
+/* Initial screen */
+searchData();
+
+</script>
 
 </body>
 </html>
+```
