@@ -1,60 +1,213 @@
-<!doctype html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>COFICAB TOOL SHOP FINDER QR</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>COFICAB Tool Shop QR</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#07111f;color:#f8fafc;min-height:100vh}.wrap{max-width:680px;margin:auto;padding:22px}.card{background:#101d2e;border:1px solid #29415c;border-radius:22px;padding:24px;box-shadow:0 18px 45px #0005;text-align:center}.head{background:linear-gradient(135deg,#0d2238,#0b1728);border:1px solid #29415c;border-radius:17px;padding:20px;margin-bottom:18px}.brand{font-weight:900;letter-spacing:5px;color:#29b6f6}.head h1{margin:8px 0 5px;font-size:25px}.head p{margin:0;color:#9fb0c3}.label{display:block;text-align:left;color:#9fb0c3;font-size:13px;margin:12px 0 6px}.url{width:100%;padding:14px;border:2px solid #29415c;border-radius:12px;background:#07111f;color:#fff;font-size:14px;outline:none}.url:focus{border-color:#29b6f6}.btn{border:0;background:#0284c7;color:#fff;padding:13px 20px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;margin-top:10px}.qr{margin:22px auto 14px;width:310px;min-height:310px;background:#fff;border-radius:16px;padding:15px;display:flex;align-items:center;justify-content:center}.qr img{display:block;width:280px;height:280px;image-rendering:auto}.status{font-size:13px;color:#9fb0c3;line-height:1.5}.ok{color:#22c55e;font-weight:700}.warn{color:#fbbf24}.note{margin-top:18px;padding:13px;border:1px solid #29415c;border-radius:12px;color:#9fb0c3;font-size:12px;line-height:1.6;text-align:left}.small{font-size:12px;color:#708399;margin-top:12px;word-break:break-all}
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f1f4f7;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.card{
+    width:min(430px,92%);
+    background:white;
+    border-radius:22px;
+    padding:30px 22px;
+    text-align:center;
+    box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+
+.logo{
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:3px;
+    color:#0b3154;
+}
+
+.title{
+    margin-top:7px;
+    font-size:18px;
+    font-weight:700;
+    color:#34495e;
+}
+
+#qr{
+    margin:25px auto;
+    width:280px;
+    height:280px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:white;
+}
+
+#qr img{
+    width:280px;
+    height:280px;
+    display:block;
+}
+
+.scan{
+    font-size:20px;
+    font-weight:800;
+    color:#0b4b78;
+    margin-top:10px;
+}
+
+.small{
+    margin-top:8px;
+    color:#7a8792;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.url{
+    margin-top:15px;
+    padding:10px;
+    border-radius:9px;
+    background:#f3f6f8;
+    font-size:11px;
+    color:#65727e;
+    word-break:break-all;
+}
+
+button{
+    margin-top:18px;
+    border:0;
+    padding:12px 20px;
+    border-radius:10px;
+    background:#0b4b78;
+    color:white;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+}
 </style>
 </head>
+
 <body>
-<div class="wrap"><div class="card">
-<div class="head"><div class="brand">COFICAB</div><h1>TOOL SHOP FINDER</h1><p>QR Code — Scan to Search</p></div>
-<label class="label" for="url">Finder URL</label>
-<input id="url" class="url" autocomplete="off" spellcheck="false">
-<button id="gen" class="btn">Generate QR Code</button>
-<div id="qr" class="qr"><span class="status">Preparing QR...</span></div>
-<div id="status" class="status"></div>
-<div class="note"><b>Important:</b> Upload <b>index.html</b> and <b>QR.index.html</b> together in the same GitHub Pages folder. The QR target will automatically be the live <b>index.html</b> page. If you open this QR file directly from your computer, the address may start with <b>file://</b>; that is not a valid phone destination. Generate/use the QR from the live GitHub Pages URL.</div>
-<div class="small" id="target"></div>
-</div></div>
+
+<div class="card">
+
+    <div class="logo">COFICAB</div>
+
+    <div class="title">
+        TOOL & DIE SHOP
+    </div>
+
+    <div id="qr">
+        Creating QR...
+    </div>
+
+    <div class="scan">
+        SCAN TO SEARCH
+    </div>
+
+    <div class="small">
+        Scan this QR code to open the<br>
+        COFICAB Tool & Die Shop Finder.
+    </div>
+
+    <div class="url" id="targetUrl">
+        Creating link...
+    </div>
+
+    <button onclick="openFinder()">
+        OPEN FINDER
+    </button>
+
+</div>
+
 <script>
-const input=document.getElementById('url');
-const qr=document.getElementById('qr');
-const status=document.getElementById('status');
-const target=document.getElementById('target');
-function liveFinderUrl(){
-  try{
-    const u=new URL('index.html',window.location.href);
-    if(u.protocol==='http:'||u.protocol==='https:') return u.href;
-  }catch(e){}
-  return '';
+
+/*
+=========================================================
+COFICAB QR SYSTEM
+=========================================================
+
+The target is generated automatically.
+
+QR.index.html
+       ↓
+same folder
+       ↓
+index.html
+
+Therefore no hard-coded Netlify/GitHub URL is required.
+=========================================================
+*/
+
+const targetURL =
+    new URL("index.html", window.location.href).href;
+
+const qrSize = 280;
+
+/*
+Use QR Server as an IMAGE endpoint.
+This avoids the previous QR JavaScript-library problem.
+*/
+
+const qrImageURL =
+    "https://api.qrserver.com/v1/create-qr-code/" +
+    "?size=" + qrSize + "x" + qrSize +
+    "&margin=10" +
+    "&data=" + encodeURIComponent(targetURL);
+
+const qrContainer =
+    document.getElementById("qr");
+
+const image =
+    document.createElement("img");
+
+image.alt =
+    "COFICAB Tool Shop Finder QR Code";
+
+image.src =
+    qrImageURL;
+
+image.onload = function(){
+    qrContainer.innerHTML = "";
+    qrContainer.appendChild(image);
+};
+
+image.onerror = function(){
+
+    qrContainer.innerHTML = `
+        <div style="
+            padding:20px;
+            color:#b00020;
+            font-weight:bold;
+            line-height:1.5;
+        ">
+            QR could not be loaded.<br><br>
+            Please check the internet connection.
+        </div>
+    `;
+};
+
+document.getElementById("targetUrl").textContent =
+    targetURL;
+
+function openFinder(){
+    window.location.href = targetURL;
 }
-function make(){
-  const value=input.value.trim();
-  qr.innerHTML='';
-  if(!/^https?:\/\//i.test(value)){
-    qr.innerHTML='<span class="status warn">Enter the live GitHub Pages URL first.</span>';
-    status.innerHTML='<span class="warn">QR was not generated because the target is not a web URL.</span>';
-    target.textContent='';
-    return;
-  }
-  const img=document.createElement('img');
-  img.alt='COFICAB Tool Shop Finder QR Code';
-  img.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data='+encodeURIComponent(value);
-  img.onload=()=>{status.innerHTML='<span class="ok">QR ready — scan it with your phone camera.</span>';};
-  img.onerror=()=>{qr.innerHTML='<span class="status warn">QR service could not be reached. Check internet access and try again.</span>';status.textContent='';};
-  qr.appendChild(img);
-  target.textContent='QR target: '+value;
-}
-const auto=liveFinderUrl();
-if(auto){input.value=auto;make();}else{
-  input.value='';
-  qr.innerHTML='<span class="status warn">Open this page from GitHub Pages, or paste your live index.html URL above.</span>';
-  status.textContent='';
-}
-document.getElementById('gen').addEventListener('click',make);
-input.addEventListener('keydown',e=>{if(e.key==='Enter')make();});
+
 </script>
-</body></html>
+
+</body>
+</html>
+```
