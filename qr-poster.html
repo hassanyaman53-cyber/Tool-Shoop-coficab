@@ -1,213 +1,47 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- QR Code Card -->
+<section id="qr-print-area" class="qr-card">
+  <h2>COFICAB TOOL SHOP</h2>
+  <p>امسح الكود لفتح أداة البحث</p>
 
-<title>COFICAB Tool Shop QR</title>
+  <div class="qr-frame">
+    <div id="qrcode"></div>
 
-<style>
-*{
-    box-sizing:border-box;
-}
+    <!-- شعار الشركة داخل QR -->
+    <img
+      class="qr-logo"
+      src="./coficab-logo.png"
+      alt="COFICAB Logo"
+    />
+  </div>
 
-body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f1f4f7;
-    font-family:Arial,Helvetica,sans-serif;
-}
+  <div class="qr-url">
+    https://hassanyaman53-cyber.github.io/Tool-Shoop-coficab/
+  </div>
 
-.card{
-    width:min(430px,92%);
-    background:white;
-    border-radius:22px;
-    padding:30px 22px;
-    text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,.12);
-}
+  <button id="print-qr" type="button">
+    🖨️ طباعة QR Code
+  </button>
+</section>
 
-.logo{
-    font-size:34px;
-    font-weight:900;
-    letter-spacing:3px;
-    color:#0b3154;
-}
-
-.title{
-    margin-top:7px;
-    font-size:18px;
-    font-weight:700;
-    color:#34495e;
-}
-
-#qr{
-    margin:25px auto;
-    width:280px;
-    height:280px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:white;
-}
-
-#qr img{
-    width:280px;
-    height:280px;
-    display:block;
-}
-
-.scan{
-    font-size:20px;
-    font-weight:800;
-    color:#0b4b78;
-    margin-top:10px;
-}
-
-.small{
-    margin-top:8px;
-    color:#7a8792;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.url{
-    margin-top:15px;
-    padding:10px;
-    border-radius:9px;
-    background:#f3f6f8;
-    font-size:11px;
-    color:#65727e;
-    word-break:break-all;
-}
-
-button{
-    margin-top:18px;
-    border:0;
-    padding:12px 20px;
-    border-radius:10px;
-    background:#0b4b78;
-    color:white;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div class="card">
-
-    <div class="logo">COFICAB</div>
-
-    <div class="title">
-        TOOL & DIE SHOP
-    </div>
-
-    <div id="qr">
-        Creating QR...
-    </div>
-
-    <div class="scan">
-        SCAN TO SEARCH
-    </div>
-
-    <div class="small">
-        Scan this QR code to open the<br>
-        COFICAB Tool & Die Shop Finder.
-    </div>
-
-    <div class="url" id="targetUrl">
-        Creating link...
-    </div>
-
-    <button onclick="openFinder()">
-        OPEN FINDER
-    </button>
-
-</div>
+<!-- مكتبة إنشاء QR Code -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
+  const toolShopUrl =
+    "https://hassanyaman53-cyber.github.io/Tool-Shoop-coficab/";
 
-/*
-=========================================================
-COFICAB QR SYSTEM
-=========================================================
+  const qrContainer = document.getElementById("qrcode" );
 
-The target is generated automatically.
+  new QRCode(qrContainer, {
+    text: toolShopUrl,
+    width: 240,
+    height: 240,
+    colorDark: "#082f49",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
 
-QR.index.html
-       ↓
-same folder
-       ↓
-index.html
-
-Therefore no hard-coded Netlify/GitHub URL is required.
-=========================================================
-*/
-
-const targetURL =
-    new URL("index.html", window.location.href).href;
-
-const qrSize = 280;
-
-/*
-Use QR Server as an IMAGE endpoint.
-This avoids the previous QR JavaScript-library problem.
-*/
-
-const qrImageURL =
-    "https://api.qrserver.com/v1/create-qr-code/" +
-    "?size=" + qrSize + "x" + qrSize +
-    "&margin=10" +
-    "&data=" + encodeURIComponent(targetURL);
-
-const qrContainer =
-    document.getElementById("qr");
-
-const image =
-    document.createElement("img");
-
-image.alt =
-    "COFICAB Tool Shop Finder QR Code";
-
-image.src =
-    qrImageURL;
-
-image.onload = function(){
-    qrContainer.innerHTML = "";
-    qrContainer.appendChild(image);
-};
-
-image.onerror = function(){
-
-    qrContainer.innerHTML = `
-        <div style="
-            padding:20px;
-            color:#b00020;
-            font-weight:bold;
-            line-height:1.5;
-        ">
-            QR could not be loaded.<br><br>
-            Please check the internet connection.
-        </div>
-    `;
-};
-
-document.getElementById("targetUrl").textContent =
-    targetURL;
-
-function openFinder(){
-    window.location.href = targetURL;
-}
-
+  document.getElementById("print-qr").addEventListener("click", function () {
+    window.print();
+  });
 </script>
-
-</body>
-</html>
-```
