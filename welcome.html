@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome to COFICAB Tool Shop</title>
+  <title>COFICAB Tool Shop</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -17,38 +21,45 @@
     }
 
     .box {
-      width: min(94%, 900px);
+      width: min(94%, 950px);
+      padding: 15px;
       text-align: center;
       background: white;
-      padding: 18px;
-      border-radius: 18px;
+      border-radius: 20px;
       box-shadow: 0 8px 30px #0005;
     }
 
     img {
       width: 100%;
       display: block;
-      border-radius: 12px;
+      border-radius: 14px;
     }
 
     a {
       display: block;
+      max-width: 380px;
       margin: 18px auto 4px;
-      max-width: 360px;
-      padding: 14px;
+      padding: 15px;
       border-radius: 12px;
       background: #0b4f71;
       color: white;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 19px;
       font-weight: bold;
+    }
+
+    a:hover {
+      background: #06364e;
     }
   </style>
 </head>
 
 <body>
   <main class="box">
-    <img src="./welcome.png" alt="COFICAB Tool Shop Welcome">
+    <img
+      src="./welcome.png"
+      alt="COFICAB Tool Shop Welcome"
+    >
 
     <a href="./index.html">
       دخول إلى Tool Shop
