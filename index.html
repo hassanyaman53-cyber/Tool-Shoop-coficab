@@ -66,7 +66,53 @@ add('Extrusion','Storage Unit 2','Door 2 → Shelf 1','Cleaning Brushes');
 add('Extrusion','Storage Unit 2','Door 2 → Shelf 2','Cleaning Brushes');
 for(let i=1;i<=15;i++)if(i!==2)add('Stock','Hanging Cabinet '+i,'Main Storage','Empty');
 
-const cats=['ALL','Multi Drawing','Bunching','ROD','Extrusion','Stock']; let active='ALL';
+// NEW DATA — added to the existing Tool Shop database
+[
+ ['A-1','CERAMIC DILDING','3.1 / 3.5'],
+ ['A-2','CERAMIC DILDING','2.9 / 2.55 / 2.5 / 2.3 / 2.0'],
+ ['A-3','CERAMIC DILDING','1.55 / 1.8 / 1.3 / 1.15 / 0.95 / 0.8'],
+ ['A-4','MICH FATER','D25: 0.2 / 0.4 / 0.14; D36: 0.2 / 0.4 / 0.14'],
+ ['A-5','MICH FALTER','D37: 0.2 / 0.4 / 0.14'],
+ ['A-6','MICH FALTER','D53: 0.2 / 0.4 / 0.14'],
+ ['A-7','MESH FILTER','']
+].forEach(x=>add('Cabinet','Cabinet A',x[0],x[1],x[2],'','Available','','','Mesh Filter Ceramic Dilding Mich Fater Mich Falter'));
+[
+ ['B-1','Harness Measuring Device'],['B-2','Measuring Devices'],['B-3','Torque Tools'],
+ ['B-4','Cutting Tools'],['B-5','Safety Equipment'],['B-6','Calibration Tools'],
+ ['B-7','Electrical Extension Socket']
+].forEach(x=>add('Cabinet','Cabinet B',x[0],x[1],'','','Available','','',''));
+[
+ ['C-1','Brown Tape + Black Tape'],['C-2','Blue Tape + Green Tape'],
+ ['C-3','White Tape'],['C-4','Sponge']
+].forEach(x=>add('Cabinet','Cabinet C',x[0],x[1],'','','Available','','','Tape Sponge'));
+['C-5','C-6','C-7'].forEach(d=>add('Cabinet','Cabinet C',d,'Empty','','','Empty','','',''));
+['D-1','D-2','D-3','D-4','D-5','D-6','D-7'].forEach(d=>add('Cabinet','Cabinet D',d,'Empty','','','Empty','','',''));
+add('Cabinet','Cabinet E','Large Shelf','Screw Holders','','','Available','','','Screw Holder');
+
+add('Storage','Storage Unit 1 — Under Production Window','Drawer 1','Plastic Stoppers','','','Available','','','Plastic Stoppers');
+add('Storage','Storage Unit 1 — Under Production Window','Drawer 2','Die Holders','','','Available','','','Die Holders');
+add('Storage','Storage Unit 1 — Under Production Window','Shelves','Empty','','','Empty','','','');
+
+add('Storage','Storage Unit 2 — Tool Shop','Drawer 1','Bunching Machine Springs','','','Available','','','Bunching Springs');
+add('Storage','Storage Unit 2 — Tool Shop','Drawer 2','Screws + Nuts + Washers','','','Available','','','Fasteners');
+add('Storage','Storage Unit 2 — Tool Shop','Drawer 3','Bunching Die Holders','','','Available','','','Bunching Die Holders');
+add('Storage','Storage Unit 2 — Tool Shop','Drawer 4','Empty','','','Empty','','','');
+add('Storage','Storage Unit 2 — Tool Shop','Door 1 → Shelf 1','Plates','','','Available','','','Plate');
+add('Storage','Storage Unit 2 — Tool Shop','Door 1 → Shelf 2','Guides','','','Available','','','Guide');
+add('Storage','Storage Unit 2 — Tool Shop','Door 2 → Shelf 1','Plates Ready for Operation + Die Holders','','','Available','','','Ready Plates Die Holders');
+add('Storage','Storage Unit 2 — Tool Shop','Door 2 → Shelf 2','Plates Ready for Operation','','','Available','','','Ready Plates');
+
+['Drawer 1','Drawer 2','Drawer 3','Drawer 4'].forEach(d=>add('Storage','Storage Unit 3 — Tool Shop',d,'Empty','','','Empty','','',''));
+add('Storage','Storage Unit 3 — Tool Shop','Door 1 → Shelf 1','Insulation Manufacturing Tools','','','Available','','','Insulation Tools');
+add('Storage','Storage Unit 3 — Tool Shop','Door 1 → Shelf 2','Multi Drawing Welding Machine','','','Available','','','Welding Machine');
+add('Storage','Storage Unit 3 — Tool Shop','Door 2 → Shelf 1','Cleaning Brushes','','','Available','','','Cleaning Brushes');
+add('Storage','Storage Unit 3 — Tool Shop','Door 2 → Shelf 2','Cleaning Brushes','','','Available','','','Cleaning Brushes');
+
+// Units 4 and 5 are reserved for future data.
+add('Storage','Storage Unit 4','All drawers / shelves','To Be Updated','','','Pending','','','');
+add('Storage','Storage Unit 5','All drawers / shelves','To Be Updated','','','Pending','','','');
+
+const cats=['ALL','Multi Drawing','Bunching','ROD','Extrusion','Stock','Cabinet','Storage']; let active='ALL';
 function norm(s){return String(s??'').toLowerCase().replace(/[→➡]/g,' ').replace(/,/g,'.').replace(/[^a-z0-9. -]+/g,' ').replace(/\s+/g,' ').trim()}
 function compact(s){return norm(s).replace(/[ .-]/g,'')}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
